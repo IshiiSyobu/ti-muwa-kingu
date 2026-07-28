@@ -1,0 +1,39 @@
+h1{
+        font-size:250%;
+        background-color:black;
+        color:aliceblue;
+        width:640px;
+}
+h3{     
+       border-left:solid 10px hsl(6, 100%, 75%);
+        border-bottom:solid 3px #ff8c00;
+        margin-top:30px;
+        color:#000080;
+        width:630px;
+}
+img{ 
+        margin-bottom:15px;
+}
+table{
+        border:solid 1px #c0c0c0;
+        margin-bottom:20px;
+        width:640px;
+}
+body {
+       background-color: lightblue;
+}
+.glow-button {
+  background: orange;
+  color: blueviolet;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 0 10px orange, 0 0 20px orange, 0 0 30px orange;
+}
+
+.glow-button:hover {
+  box-shadow: 0 0 15px #2196f3, 0 0 30px #2196f3, 0 0 45px #2196f3,
+    0 0 60px #2196f3;
+}
