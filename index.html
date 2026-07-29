@@ -88,4 +88,108 @@ width="640" height="330" alt="金刀比羅宮の表参道">
 <p>屋島は1185年の源平合戦「屋島の戦い」の舞台として有名です。山上には古戦場や史跡が残っており、歴史を身近に感じることができます。また、四国八十八ヶ所霊場第84番札所の屋島寺もあり、歴史と文化に触れられる観光地として人気があります。</p>
 </body>
 制作　　<button class="glow-button">Y.Y</button>
+<script src='https://cdn.jsdelivr.net/npm/p5@2/lib/p5.min.js'></script>
+<body>
+<script>
+ let snake;
+ 
+function setup() {
+  createCanvas(1280, 200, WEBGL);
+  angleMode(DEGREES);
+  buildSnake();
+  describe('A tiled plane of snake models');
+}
+ 
+function buildSnake() {
+  // If there was a previous snake, we're going to replace it
+  // so we can free its resources to save memory
+  if (snake) {
+    freeGeometry(snake);
+  }
+ 
+  snake = buildGeometry(() => {
+    colorMode(HSB, 100);
+    fill(random(100), 50, 100);
+ 
+    // Draw the head
+    push();
+    scale(1, 0.5, 1.4);
+    sphere(50);
+    pop();
+ 
+    // Draw eyes
+    for (let mirrorX of [-1, 1]) {
+      push();
+      scale(mirrorX, 1, 1);
+      fill('black');
+      translate(20, -20, 10);
+      sphere(10);
+      pop();
+    }
+    translate(0, 0, 50);
+ 
+    // Draw body
+    let numSegments = ceil(random(10, 30));
+    for (let segment = 0; segment < numSegments; segment++) {
+      rotateY(random(-60, 60));
+      translate(0, 0, 50);
+      push();
+      rotateX(90);
+      scale(1, 1, 0.5);
+      let radius = map(segment, numSegments - 5, numSegments, 50, 0, true);
+      cylinder(radius, 100);
+      pop();
+      translate(0, 0, 50);
+    }
+  });
+ 
+  // Recenter the model and scale it to a common size
+  snake.normalize();
+}
+ 
+function draw() {
+  background(255);
+  noStroke();
+  scale(1.5);
+ 
+  // Slowly orbit around the plane of snakes
+  rotateX(-45);
+  rotateY(frameCount * 0.25);
+ 
+  // Set up the material and shininess
+  lights();
+  specularMaterial('white');
+  shininess(100);
+ 
+  // Tile the snake model a number of times along the ground
+  for (let x = -4; x <= 4; x += 1) {
+    for (let z = -4; z <= 4; z += 1) {
+      push();
+      translate(x * 200, 0, z * 200);
+      model(snake);
+      pop();
+    }
+  }
+}
+ 
+// When mouse is pressed, generate a new snake
+function mousePressed() {
+  buildSnake();
+}  
+</Script>
+<header>
+<h1>寒霞渓</h1>
+<img src="https://www.kankakei.co.jp/archives/001/201806/large-5b2608f217296.jpg" width="900" height="440" alt="寒霞渓
+">
+</header>
+<h1>秋になると様相を変えます</h1>
+<img src="https://tori-dori.com/wp/wp-content/uploads/PG19-080104-1.jpg" width="900" height="330" alt="寒霞渓">
+<p>秋になると、紅葉が美しく見えるようになります。ゴンドラから現れてくる景色は息をのむような豪華な模様で装飾された秋の山たちが見え、その隙間から見える渓谷の様子にはきっと永遠の思い出となるような世界が広がっていることでしょう。
+    また小豆島はオリーブが有名でショップには様々なオリーブを使った商品が売られており、小豆島を感じるのに最適な商品がさまざまにおいてあります。</p>
+</p>
+<h1>山頂からの景色が最高！</h1>
+<img src="https://stat.ameba.jp/user_images/20200603/20/tad55kawasaki/91/cc/j/o2880216014768652812.jpg" width="900" height="330" alt="寒霞渓">
+<p>山頂からは、広大な自然の美景を一望できます。ここから見える景色はとても美しく、小豆島全体を眺めることが出来ます。頂上にはたくさんの施設があって、アイスクリームやジュースがあるので、それらを楽しみながらまた眺めることが出来ます。頂上にはたくさんの記念撮影スポットや撮影を華やかにさせるグッズがあってとても楽しむことが出来ます。</p>
+</body>
+制作　　<button class="glow-button">Y.Y</button>
 </html>
