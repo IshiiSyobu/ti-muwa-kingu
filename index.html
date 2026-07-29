@@ -22,107 +22,65 @@
 <p>春には桜、夏には若葉、秋には紅葉、冬には雪景色、栗林公園は季節が変わるたびに新しい姿を見せます。池が風景を反射するのも幻想的です。
 </p>
 </body>
-<script src='https://cdn.jsdelivr.net/npm/p5@2/lib/p5.min.js'></script>
-<body>
-<script>
- let snake;
- 
-function setup() {
-  createCanvas(1280, 200, WEBGL);
-  angleMode(DEGREES);
-  buildSnake();
-  describe('A tiled plane of snake models');
-}
- 
-function buildSnake() {
-  // If there was a previous snake, we're going to replace it
-  // so we can free its resources to save memory
-  if (snake) {
-    freeGeometry(snake);
-  }
- 
-  snake = buildGeometry(() => {
-    colorMode(HSB, 100);
-    fill(random(100), 50, 100);
- 
-    // Draw the head
-    push();
-    scale(1, 0.5, 1.4);
-    sphere(50);
-    pop();
- 
-    // Draw eyes
-    for (let mirrorX of [-1, 1]) {
-      push();
-      scale(mirrorX, 1, 1);
-      fill('black');
-      translate(20, -20, 10);
-      sphere(10);
-      pop();
-    }
-    translate(0, 0, 50);
- 
-    // Draw body
-    let numSegments = ceil(random(10, 30));
-    for (let segment = 0; segment < numSegments; segment++) {
-      rotateY(random(-60, 60));
-      translate(0, 0, 50);
-      push();
-      rotateX(90);
-      scale(1, 1, 0.5);
-      let radius = map(segment, numSegments - 5, numSegments, 50, 0, true);
-      cylinder(radius, 100);
-      pop();
-      translate(0, 0, 50);
-    }
-  });
- 
-  // Recenter the model and scale it to a common size
-  snake.normalize();
-}
- 
-function draw() {
-  background(255);
-  noStroke();
-  scale(1.5);
- 
-  // Slowly orbit around the plane of snakes
-  rotateX(-45);
-  rotateY(frameCount * 0.25);
- 
-  // Set up the material and shininess
-  lights();
-  specularMaterial('white');
-  shininess(100);
- 
-  // Tile the snake model a number of times along the ground
-  for (let x = -4; x <= 4; x += 1) {
-    for (let z = -4; z <= 4; z += 1) {
-      push();
-      translate(x * 200, 0, z * 200);
-      model(snake);
-      pop();
-    }
-  }
-}
- 
-// When mouse is pressed, generate a new snake
-function mousePressed() {
-  buildSnake();
-}  
-</Script>
 制作　　<button class="glow-button">I.S</button>
+<style>
+        /* 「丸亀城」のフェードイン */
+        #marugame {
+            opacity: 0;
+            transition: opacity 4s ease-in-out;
+        }
+    </style>
+</head>
+ 
 <body>
-<header>
-<h1> 丸亀城</h1>
-<img src="https://meguri-japan.com/mgr/wp-content/uploads/2021/10/marukame1.jpg" width="640" height="330" alt="なんでもいい">
-</header>
-<h3>特徴的な石垣</h3>
-<img src="https://xs375162.xsrv.jp/shiro-navi/wp-content/uploads/2023/05/IMG20230503104505-scaled.jpg" width="640" height="330" alt="なんでもいい">
-<p>丸亀城は「石垣の名城」として知られ、その最大の見どころは美しく積み上げられた壮大な石垣です。石垣の高さは全国で2位を誇り、天守へと続く幾重にも重なる石垣は圧巻の迫力があります。緩やかな曲線を描く「扇の勾配」と呼ばれる美しい石垣は、多くの観光客を魅了しています。実際に間近で見上げると、その高さとスケールの大きさを体感でき、丸亀城ならではの歴史と風格を感じることができます。</p>
-<h3>春の丸亀城</h3>
-<img src="https://s3-ap-northeast-1.amazonaws.com/thegate/2023/02/21/19/20/00/Marugamejo-castle-spring.jpg" width="640" height="330" alt="なんでもいい">
-<p>春には約650本のソメイヨシノが一斉に咲き誇り、丸亀城一帯を淡いピンク色に包み込みます。満開の桜が城を囲むように広がる光景は圧巻で、訪れる人々を魅了します。高くそびえ立つ天守と桜が織りなす景観は、春ならではの絶景として親しまれており、散策をしながら風情を感じることができます。開花時期には多くの花見客でにぎわい、春の訪れを存分に満喫できる人気のスポットです。</p>
+ 
+    <header>
+        <p>授業の一環として、厳選した香川の観光地を5か所紹介します。（仮）</p>
+    </header>
+ 
+    <main>
+ 
+        <h1 id="marugame">丸亀城</h1>
+ 
+        <img src="https://meguri-japan.com/mgr/wp-content/uploads/2021/10/marukame1.jpg"
+             width="640" height="330" alt="丸亀城">
+ 
+        <h3>特徴的な石垣</h3>
+ 
+        <img src="https://xs375162.xsrv.jp/shiro-navi/wp-content/uploads/2023/05/IMG20230503104505-scaled.jpg"
+             width="640" height="330" alt="丸亀城の石垣">
+ 
+        <p>
+            丸亀城は「石垣の名城」として知られ、その最大の見どころは美しく積み上げられた壮大な石垣です。
+            石垣の高さは全国で2位を誇り、天守へと続く幾重にも重なる石垣は圧巻の迫力があります。
+            緩やかな曲線を描く「扇の勾配」と呼ばれる美しい石垣は、多くの観光客を魅了しています。
+            実際に間近で見上げると、その高さとスケールの大きさを体感でき、
+            丸亀城ならではの歴史と風格を感じることができます。
+        </p>
+ 
+        <h3>春の丸亀城</h3>
+ 
+        <img src="https://s3-ap-northeast-1.amazonaws.com/thegate/2023/02/21/19/20/00/Marugamejo-castle-spring.jpg"
+             width="640" height="330" alt="春の丸亀城">
+ 
+        <p>
+            春には約650本のソメイヨシノが一斉に咲き誇り、丸亀城一帯を淡いピンク色に包み込みます。
+            満開の桜が城を囲むように広がる光景は圧巻で、訪れる人々を魅了します。
+            高くそびえ立つ天守と桜が織りなす景観は、春ならではの絶景として親しまれており、
+            散策をしながら風情を感じることができます。
+            開花時期には多くの花見客でにぎわい、
+            春の訪れを存分に満喫できる人気のスポットです。
+        </p>
+ 
+    </main>
+ 
+    <script>
+        // ページが読み込まれたら「丸亀城」をフェードイン
+        window.onload = function () {
+            document.getElementById("marugame").style.opacity = "1";
+        };
+    </script>
+ 
 </body>
 制作　　<button class="glow-button">S.Y</button>
 <body>
@@ -137,95 +95,6 @@ function mousePressed() {
 <img src="https://www.newreomaworld.com/wp-content/uploads/2025/02/2H2A3257_edited.jpg" width="640" height="330" alt="なんでもいい">
 <p>カレーやステーキなど様々な食欲をそそるメニューが遊園地やプール、ホテルの様々なところで販売されていて、お値段は少し高いですがとてもおいしい料理がたくさんあります。また、スイーツも充実していて、チュロスやソフトクリームなどこれから始まる暑い夏にはぴったりです。他にも、レオマのホテルでは、バイキングを行えて、季節によっては蟹など特別な食材を楽しむことができます。</p>
 </body>
-<script src='https://cdn.jsdelivr.net/npm/p5@2/lib/p5.min.js'></script>
-<body>
-<script>
- let snake;
- 
-function setup() {
-  createCanvas(1280, 200, WEBGL);
-  angleMode(DEGREES);
-  buildSnake();
-  describe('A tiled plane of snake models');
-}
- 
-function buildSnake() {
-  // If there was a previous snake, we're going to replace it
-  // so we can free its resources to save memory
-  if (snake) {
-    freeGeometry(snake);
-  }
- 
-  snake = buildGeometry(() => {
-    colorMode(HSB, 100);
-    fill(random(100), 50, 100);
- 
-    // Draw the head
-    push();
-    scale(1, 0.5, 1.4);
-    sphere(50);
-    pop();
- 
-    // Draw eyes
-    for (let mirrorX of [-1, 1]) {
-      push();
-      scale(mirrorX, 1, 1);
-      fill('black');
-      translate(20, -20, 10);
-      sphere(10);
-      pop();
-    }
-    translate(0, 0, 50);
- 
-    // Draw body
-    let numSegments = ceil(random(10, 30));
-    for (let segment = 0; segment < numSegments; segment++) {
-      rotateY(random(-60, 60));
-      translate(0, 0, 50);
-      push();
-      rotateX(90);
-      scale(1, 1, 0.5);
-      let radius = map(segment, numSegments - 5, numSegments, 50, 0, true);
-      cylinder(radius, 100);
-      pop();
-      translate(0, 0, 50);
-    }
-  });
- 
-  // Recenter the model and scale it to a common size
-  snake.normalize();
-}
- 
-function draw() {
-  background(255);
-  noStroke();
-  scale(1.5);
- 
-  // Slowly orbit around the plane of snakes
-  rotateX(-45);
-  rotateY(frameCount * 0.25);
- 
-  // Set up the material and shininess
-  lights();
-  specularMaterial('white');
-  shininess(100);
- 
-  // Tile the snake model a number of times along the ground
-  for (let x = -4; x <= 4; x += 1) {
-    for (let z = -4; z <= 4; z += 1) {
-      push();
-      translate(x * 200, 0, z * 200);
-      model(snake);
-      pop();
-    }
-  }
-}
- 
-// When mouse is pressed, generate a new snake
-function mousePressed() {
-  buildSnake();
-}  
-</Script>
 制作　　<button class="glow-button">K.K</button>
 <main>
 <h1> 金刀比羅宮</h1>
@@ -251,95 +120,6 @@ width="640" height="330" alt="金刀比羅宮の表参道">
 </p>
 </main>
 </body>
-<script src='https://cdn.jsdelivr.net/npm/p5@2/lib/p5.min.js'></script>
-<body>
-<script>
- let snake;
- 
-function setup() {
-  createCanvas(1280, 200, WEBGL);
-  angleMode(DEGREES);
-  buildSnake();
-  describe('A tiled plane of snake models');
-}
- 
-function buildSnake() {
-  // If there was a previous snake, we're going to replace it
-  // so we can free its resources to save memory
-  if (snake) {
-    freeGeometry(snake);
-  }
- 
-  snake = buildGeometry(() => {
-    colorMode(HSB, 100);
-    fill(random(100), 50, 100);
- 
-    // Draw the head
-    push();
-    scale(1, 0.5, 1.4);
-    sphere(50);
-    pop();
- 
-    // Draw eyes
-    for (let mirrorX of [-1, 1]) {
-      push();
-      scale(mirrorX, 1, 1);
-      fill('black');
-      translate(20, -20, 10);
-      sphere(10);
-      pop();
-    }
-    translate(0, 0, 50);
- 
-    // Draw body
-    let numSegments = ceil(random(10, 30));
-    for (let segment = 0; segment < numSegments; segment++) {
-      rotateY(random(-60, 60));
-      translate(0, 0, 50);
-      push();
-      rotateX(90);
-      scale(1, 1, 0.5);
-      let radius = map(segment, numSegments - 5, numSegments, 50, 0, true);
-      cylinder(radius, 100);
-      pop();
-      translate(0, 0, 50);
-    }
-  });
- 
-  // Recenter the model and scale it to a common size
-  snake.normalize();
-}
- 
-function draw() {
-  background(255);
-  noStroke();
-  scale(1.5);
- 
-  // Slowly orbit around the plane of snakes
-  rotateX(-45);
-  rotateY(frameCount * 0.25);
- 
-  // Set up the material and shininess
-  lights();
-  specularMaterial('white');
-  shininess(100);
- 
-  // Tile the snake model a number of times along the ground
-  for (let x = -4; x <= 4; x += 1) {
-    for (let z = -4; z <= 4; z += 1) {
-      push();
-      translate(x * 200, 0, z * 200);
-      model(snake);
-      pop();
-    }
-  }
-}
- 
-// When mouse is pressed, generate a new snake
-function mousePressed() {
-  buildSnake();
-}  
-</Script>
 制作　　<button class="glow-button">N.Y</button>
 <head>
 <body>
@@ -441,7 +221,7 @@ function draw() {
  
 // When mouse is pressed, generate a new snake
 function mousePressed() {
-  buildSnake();
+  buildSnake();hoihhiohoi
 }  
 </Script>
 <header>
@@ -458,94 +238,5 @@ function mousePressed() {
 <img src="https://stat.ameba.jp/user_images/20200603/20/tad55kawasaki/91/cc/j/o2880216014768652812.jpg" width="900" height="330" alt="寒霞渓">
 <p>山頂からは、広大な自然の美景を一望できます。ここから見える景色はとても美しく、小豆島全体を眺めることが出来ます。頂上にはたくさんの施設があって、アイスクリームやジュースがあるので、それらを楽しみながらまた眺めることが出来ます。頂上にはたくさんの記念撮影スポットや撮影を華やかにさせるグッズがあってとても楽しむことが出来ます。</p>
 </body>
-<script src='https://cdn.jsdelivr.net/npm/p5@2/lib/p5.min.js'></script>
-<body>
-<script>
- let snake;
- 
-function setup() {
-  createCanvas(1280, 200, WEBGL);
-  angleMode(DEGREES);
-  buildSnake();
-  describe('A tiled plane of snake models');
-}
- 
-function buildSnake() {
-  // If there was a previous snake, we're going to replace it
-  // so we can free its resources to save memory
-  if (snake) {
-    freeGeometry(snake);
-  }
- 
-  snake = buildGeometry(() => {
-    colorMode(HSB, 100);
-    fill(random(100), 50, 100);
- 
-    // Draw the head
-    push();
-    scale(1, 0.5, 1.4);
-    sphere(50);
-    pop();
- 
-    // Draw eyes
-    for (let mirrorX of [-1, 1]) {
-      push();
-      scale(mirrorX, 1, 1);
-      fill('black');
-      translate(20, -20, 10);
-      sphere(10);
-      pop();
-    }
-    translate(0, 0, 50);
- 
-    // Draw body
-    let numSegments = ceil(random(10, 30));
-    for (let segment = 0; segment < numSegments; segment++) {
-      rotateY(random(-60, 60));
-      translate(0, 0, 50);
-      push();
-      rotateX(90);
-      scale(1, 1, 0.5);
-      let radius = map(segment, numSegments - 5, numSegments, 50, 0, true);
-      cylinder(radius, 100);
-      pop();
-      translate(0, 0, 50);
-    }
-  });
- 
-  // Recenter the model and scale it to a common size
-  snake.normalize();
-}
- 
-function draw() {
-  background(255);
-  noStroke();
-  scale(1.5);
- 
-  // Slowly orbit around the plane of snakes
-  rotateX(-45);
-  rotateY(frameCount * 0.25);
- 
-  // Set up the material and shininess
-  lights();
-  specularMaterial('white');
-  shininess(100);
- 
-  // Tile the snake model a number of times along the ground
-  for (let x = -4; x <= 4; x += 1) {
-    for (let z = -4; z <= 4; z += 1) {
-      push();
-      translate(x * 200, 0, z * 200);
-      model(snake);
-      pop();
-    }
-  }
-}
- 
-// When mouse is pressed, generate a new snake
-function mousePressed() {
-  buildSnake();
-}  
-</Script>
 制作　　<button class="glow-button">Y.Y</button>
 </html>
